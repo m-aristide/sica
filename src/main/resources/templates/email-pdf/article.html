@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" media="all" href="style.css" />
+    </head>
+
+    <body>
+        <div>
+            <img class="logos" src="logo.png" alt="SICA - SCIENCES IN CAMEROON">
+        </div>
+
+        <div class="entete">
+            <a th:href="${HOST}">[[${HOST}]]</a>
+        </div>
+
+        <div class="body">
+            <div>
+                <p class="rep titre">
+                    <strong>[[${publication.titre}]]</strong>
+                    <br>
+                    <th:block th:each="auteur : ${publication.auteurs}">
+                        <span> [[${auteur.prenom}]] [[${auteur.nom}]],</span>
+                    </th:block>
+                </p>
+                <p>
+                    <img src="fleche.png"> <strong style="position: relative;top: -5px;">Pour citer cette version</strong>
+                <blockquote> [[${publication.citation}]] </blockquote>
+                </p>
+
+                <p class="rep"> 
+                    <strong>SICA id : [[${publication.code}]]</strong> 
+                    <br><br>
+                    <strong>[[${HOST}]]/consulter/publication/[[${publication.code}]]</strong>
+                    <br><br>
+                    Date de soumission : <span th:text="${#dates.format(publication.createdAt, 'dd/MM/yyyy')}"></span>
+                </p>
+            </div>
+        </div>
+        <div class="footer">
+            <table>
+                <tr>
+                    <td><strong>SICA</strong> est une archive pluridisciplinaire en libre accès pour le dépôt et la diffusion 
+                        de documents de recherche scientifique, qu'ils soient publiés ou non. Les documents peuvent provenir 
+                        d'institutions d'enseignement et de recherche au Cameroun ou à l'étranger, ou de centres de recherche 
+                        publics ou privés.
+                    </td>
+                    <td><strong>SICA</strong> is a multi-disciplinary open access archive for the deposit and dissemination of 
+                        scientific research documents, whether they are published or not. The documents may come 
+                        from teaching and research institutions in Cameroon or abroad, or from public or private 
+                        research centers.    
+                    </td>
+                </tr>
+            </table>
+            <p class="rep">
+                Ce Doucment est non-commercial. À utiliser dans le strict respect des Conditions 
+                Générales d’Utilisation de la plate-forme SICA.
+            </p>
+            <p class="rep not-sale"><img src="not-sale.png" ></p>
+        </div>
+    </body>
+
+</html>

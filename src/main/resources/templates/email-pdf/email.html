@@ -1,0 +1,73 @@
+<html>
+
+<head>
+
+  <style>
+    .entete {
+      background-color: #121d2f;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .entete>a>img {
+      background-color: #ffffff;
+    }
+
+    .entete>div {
+      font-size: 22px;
+      color: white;
+    }
+
+    .footer {
+      text-align: center;
+      vertical-align: middle;
+      background-color: #EEE;
+      padding: 10px;
+    }
+
+    .gradiant {
+      height: 5px;
+      background: rgb(16, 132, 146);
+      background: linear-gradient(90deg, rgba(16, 132, 146, 1) 0%, rgba(1, 160, 198, 1) 50%, rgba(104, 198, 221, 1) 100%);
+    }
+    .body {
+      min-height: 200px;
+      padding: 7em;
+      padding: 2em 7em;
+      margin: 0 auto;
+        /* width: 500px; */
+      text-align: center;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="content">
+
+    <div class="entete">
+      <a th:href="${HOST}">
+        <img th:src="${HOST} + ${'/'} + @{assets/images/logo.png}"alt="">
+      </a>
+      <div>Sciences In Cameroon (SICA)</div>
+    </div>
+
+    <div class="body">
+      <div th:utext="${message}"></div>
+    </div>
+
+    <div class="gradiant"></div>
+    <div class="footer">
+      Ce message est généré automatiquement par les services Web SICA.
+      <br>
+      Vous recevez cet e-mail parce que vous avez choisi les annonces relatives au site Web, aux produits et aux fonctionnalités de SICA.
+      <br>
+      <a th:href="${HOST} + ${'/'} + @{news-letter/unsubscribe?user=} + ${destinataire}">Se désabonner d'e-mails comme celui-ci</a>
+      <br>
+      &copy; Copyright The Muntu 2021, osa.asmac@gmail.com, +237690784116
+    </div>
+  </div>
+
+</body>
+
+</html>

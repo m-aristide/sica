@@ -62,7 +62,7 @@ public class MagazineService {
         try {
             // fichier
             URL url = new URL(data.getFichier());
-            mag.setFichier(data.getFichier());
+            mag.setFichier(data.getFichier());  
         } catch (MalformedURLException ex) {
             try {
                 String fichier = storageService.moveFilePublication(data.getFichier(), "magazines", data.getId().toString());

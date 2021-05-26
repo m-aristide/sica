@@ -5,20 +5,30 @@
  */
 package com.mass.sica.utils.services;
 
+import com.mass.sica.magazine.entities.Magazine;
+import com.mass.sica.magazine.entities.Videotheque;
+import com.mass.sica.magazine.repository.IMagazineRepository;
+import com.mass.sica.magazine.repository.IVideothequeRepository;
 import com.mass.sica.publication.entities.Publication;
 import com.mass.sica.publication.repositories.IPublicationRepository;
 import com.mass.sica.utils.DaysCalculator;
 import com.mass.sica.utils.UtilsJob;
+import com.mass.sica.utils.dto.Actualite;
 import com.mass.sica.utils.entities.Contacter;
 import com.mass.sica.utils.entities.NewsLetter;
 import com.mass.sica.utils.repositories.IContacterRepository;
 import com.mass.sica.utils.repositories.INewsLetterRepository;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.mail.MailException;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +53,12 @@ public class UtilsService {
 
     @Autowired
     private IPublicationRepository pubRepository;
+
+    @Autowired
+    private IVideothequeRepository videoRepository;
+
+    @Autowired
+    private IMagazineRepository magRepository;
 
     /**
      * diffusion d'une nouvelle publication à tous les abonnées de la news
@@ -148,5 +164,31 @@ public class UtilsService {
      */
     public Page<NewsLetter> abonnesNewsLetter(Pageable pgble) {
         return abonneRepository.findAll(pgble);
+    }
+
+    /**
+     * construction des actualités : les 3 publications les plus récentes du
+     * côté magazine et du côté interview
+     *
+     * @return
+     */
+    public List<Actualite> actualites() {
+        List<Actualite> actualites = new ArrayList();
+        List<Videotheque> videos = videoRepository.findAll(PageRequest.of(0, 3, Sort.by("id").descending())).getContent();
+        List<Magazine> mags = magRepository.findAll(PageRequest.of(0, 3, Sort.by("id").descending())).getContent();
+
+        mags.forEach(item -> {
+            actualites.add(new Actualite(item.getId(), item.getTitre() + " : " + item.getTitrePara(), "/magazine", item.getDatePub(), true));
+        });
+
+        videos.forEach(item -> {
+            actualites.add(new Actualite(item.getId(), item.getTitre() + " : " + item.getTitrePara(), item.getLien(), item.getDateRealisation(), false));
+        });
+
+        // trie
+        Actualite[] arrays = actualites.toArray(new Actualite[]{});
+        Arrays.sort(arrays);
+
+        return Arrays.asList(arrays);
     }
 }

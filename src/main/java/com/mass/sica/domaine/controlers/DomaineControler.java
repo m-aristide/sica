@@ -10,11 +10,15 @@ import com.mass.sica.domaine.projections.DomaineToPublish;
 import com.mass.sica.domaine.repositories.IDomaineRepository;
 import com.mass.sica.publication.entities.Publication;
 import com.mass.sica.publication.repositories.IPublicationRepository;
+import com.mass.sica.publication.utils.PUBTypeToCSLType;
 import com.mass.sica.utils.APIMessage;
 import com.mass.sica.utils.ApiResponse;
 import com.mass.sica.utils.UtilsJob;
 import com.mass.sica.utils.exception.BadRequestException;
 import com.mass.sica.utils.services.FileStorageService;
+import de.undercouch.citeproc.CSL;
+import de.undercouch.citeproc.csl.CSLItemData;
+import de.undercouch.citeproc.csl.CSLItemDataBuilder;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -62,31 +66,7 @@ public class DomaineControler {
     @PostMapping("/create/domaines")
     public ApiResponse<Boolean> nouvellesDomaines() throws IOException, Exception {
 
-        Publication data = pubRepository.findById(2L).get();
-
-        String fileName = "plans-hebergement.pdf";
-        String fichier = storageService.moveFilePublication(fileName, "publications", data.getId().toString());
-        data.setFichier(fichier);
-        // faire la première page en image
-        String image = storageService.pdfToImage("publications" + File.separator + data.getId(), data.getId().toString(), fileName);
-        data.setImage(image);
-
-        // dossier de la publication
-        String dossier = "publications" + File.separator + data.getId() + File.separator;
-
-        // ajout de la page de SICA
-        String firstPage = storageService.makeSicaPubPage(data, dossier);
-
-        // générattion de la page de garde SICA
-        System.out.println("**********************************");
-        System.out.println(firstPage);
-        System.out.println(dossier + fileName);
-        System.out.println(dossier + data.getCode() + "-" + fileName);
-        System.out.println("**********************************");
-
-        String retour = storageService.mergeInto(dossier + data.getCode() + "-" + fileName, firstPage, dossier + fileName);
-
-        System.out.println(retour);
+        Publication pub = pubRepository.findById(1L).get();
 
         return new ApiResponse<>(true, true);
     }

@@ -238,7 +238,8 @@ public class PublicationService {
         setAnneeSoutenanceStat(pub.getAnneeSoutenance(), 1);
 
         // citation
-        CSLItemDataBuilder citebuilder = new CSLItemDataBuilder()
+        pub.setCitation(PUBTypeToCSLType.citation(pub));
+        /*CSLItemDataBuilder citebuilder = new CSLItemDataBuilder()
                 .type(PUBTypeToCSLType.convert(pub.getType().getDesignation()))
                 .title(pub.getTitre())
                 .page(pub.getPage())
@@ -253,10 +254,10 @@ public class PublicationService {
         CSLItemData citebuild = citebuilder.build();
         try {
             String bibl = CSL.makeAdhocBibliography("apa", "text", citebuild).makeString();
-            pub.setCitation(bibl);
+            pub.setCitation(PUBTypeToCSLType.citation(pub));
         } catch (IOException ex) {
             throw new BadRequestException(APIMessage.ERREUR_INCONNUE);
-        }
+        }*/
 
         repository.save(pub);
         return true;

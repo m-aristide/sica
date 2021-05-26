@@ -66,6 +66,8 @@ public class Publication extends AuditModel {
     
     @Column(length = 500)
     private String colloque;
+    
+    private String pageInterval;
 
     @Column(length = 3)
     private Integer version;
@@ -122,6 +124,7 @@ public class Publication extends AuditModel {
         this.dateSoutenance = data.dateSoutenance;
         this.universite = data.universite;
         this.colloque = data.colloque;
+        this.pageInterval = data.pageInterval;
     }
 
 }

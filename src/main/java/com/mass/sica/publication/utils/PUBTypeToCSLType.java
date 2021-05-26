@@ -6,12 +6,14 @@
 package com.mass.sica.publication.utils;
 
 import com.mass.sica.publication.entities.Auteur;
+import com.mass.sica.publication.entities.Publication;
 import de.undercouch.citeproc.csl.CSLName;
 import de.undercouch.citeproc.csl.CSLType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -92,29 +94,43 @@ public class PUBTypeToCSLType {
                 return CSLType.TREATY;
             case "WEBPAGE":
                 return CSLType.WEBPAGE;
-            default: 
+            default:
                 return CSLType.THESIS;
         }
 
     }
-    
+
     public static CSLName[] convert(List<Auteur> coauteurs) {
-        
+
         List<CSLName> names = new ArrayList<>();
-        
+
         coauteurs.forEach(item -> names.add(PUBTypeToCSLType.convert(item)));
-        
+
         return names.toArray(new CSLName[names.size()]);
     }
-    
+
     public static CSLName convert(Auteur auteur) {
-        
+
         Map<String, Object> author = new HashMap<>();
-        
+
         author.put("family", auteur.getNom());
         author.put("given", auteur.getPrenom());
-        
+
         return CSLName.fromJson(author);
+    }
+
+    public static String citation(Publication pub) {
+        String result = "";
+
+        result = pub.getAuteurs().stream().map(it -> it.getPrenom().charAt(0) + ". " + it.getNom()).collect(Collectors.joining(", ")) + ". "
+                + pub.getTitre() + ". "
+                + (pub.getColloque() == null ? pub.getUniversite() : pub.getColloque()) + ", "
+                + pub.getAnneeSoutenance().getAnnee() + ". "
+                + ("fr".equals(pub.getLangue()) ? "Français": "English") + ". "
+                + (pub.getPageInterval() == null ? "" : pub.getPageInterval() + ". ")
+                + "(" + pub.getCode() + ")";
+
+        return result;
     }
 
 }

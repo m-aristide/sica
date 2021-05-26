@@ -140,7 +140,7 @@ public class AuthController {
 
         // code etat invalide
         if (!user.isPresent()) {
-            return new ApiResponse<>(false, "Adresse e-mail invalide", null);
+            return new ApiResponse<>(false, APIMessage.EMAIL_INVALIDE, null);
         }
 
         // reinitialisation

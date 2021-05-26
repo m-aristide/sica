@@ -7,9 +7,11 @@ package com.mass.sica.utils.controlers;
 
 import com.mass.sica.utils.APIMessage;
 import com.mass.sica.utils.ApiResponse;
+import com.mass.sica.utils.dto.Actualite;
 import com.mass.sica.utils.entities.Contacter;
 import com.mass.sica.utils.entities.NewsLetter;
 import com.mass.sica.utils.services.UtilsService;
+import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -79,6 +81,11 @@ public class UtilsControler {
     @GetMapping("/nous-contacter")
     public ApiResponse<Page<Contacter>> nousContacter(Pageable pgble) {
         return new ApiResponse<>(true, utilsService.nousContacter(pgble));
+    }
+
+    @GetMapping("/actualites")
+    public ApiResponse<List<Actualite>> actualites() {
+        return new ApiResponse<>(true, utilsService.actualites());
     }
 
 }

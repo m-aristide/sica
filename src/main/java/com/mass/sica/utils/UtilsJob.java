@@ -34,7 +34,8 @@ public class UtilsJob {
         if(!name.contains("SICA")) {
             return null;
         }
-        return name.substring(14);
+        String[] parts = name.split("/");
+        return parts[parts.length-1].substring(14);
     }
     
     

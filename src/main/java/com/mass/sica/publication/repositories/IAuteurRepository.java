@@ -20,7 +20,7 @@ public interface IAuteurRepository extends JpaRepository<Auteur, Long>, JpaSpeci
  
     public Auteur findByEmail(String email);
     
-    public Auteur findByNom(String email);
+    public Auteur findByNom(String nom);
     
     public List<Auteur> findByPublishedTrueAndNomLike(String lettre);
     

@@ -52,7 +52,9 @@ public class APIMessage {
     
     public static String PASSWORD_INVALIDE = "PASSWORD_INVALIDE";
     
-    public static String UTILISATEUR_EXISTE = "UTILISATEUR_EXISTE";
+    public static String UTILISATEUR_EXISTE = "CE_NOM_UTILISATEUR_EXISTE_DEJA";
+    
+    public static String UTILISATEUR_EMAIL_EXISTE = "UN_UTILISATEUR_AYANT_CET_EMAIL_EXISTE_DEJA";
     
     public static String UTILISATEUR_CREE = "UTILISATEUR_CREE";
     

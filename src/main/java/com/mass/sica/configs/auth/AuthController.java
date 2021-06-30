@@ -45,7 +45,7 @@ import org.thymeleaf.context.Context;
 public class AuthController {
 
     @Value("${app.mailhost}")
-    private String host;
+    private String HOST;
 
     @Autowired
     private UtilisateurRepository utilisateurRepository;
@@ -72,6 +72,9 @@ public class AuthController {
         if (this.utilisateurRepository.findByUsername(user.getUsername()).isPresent()) {
             return new ApiResponse<>(false, APIMessage.UTILISATEUR_EXISTE, false);
         }
+        if (this.utilisateurRepository.findByEmail(user.getEmail()).isPresent()) {
+            return new ApiResponse<>(false, APIMessage.UTILISATEUR_EMAIL_EXISTE, false);
+        }
 
         //  création de l'utilisateur
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -84,7 +87,7 @@ public class AuthController {
         Mail mail = new Mail(user.getEmail(), "Confirmation du compte", null);
         Context context = new Context();
         context.setVariable("utilisateur", user);
-        context.setVariable("host", host);
+        context.setVariable("HOST", HOST);
         context.setVariable("destinataire", mail.getDestinataire());
         mail.setBody(templateEngine.process("mails/confirmation", context));
         this.notificationService.mail(mail);

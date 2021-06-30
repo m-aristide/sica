@@ -7,22 +7,39 @@
     </head>
 
     <body>
-        <div>
-            <img class="logos" src="logo.png" alt="SICA - SCIENCES IN CAMEROON">
-        </div>
+        <table class="logos-entete">
+            <tr>
+                <td>
+                    <div>
+                        <img class="logos" src="logo.png" alt="SICA - SCIENCES IN CAMEROON">
+                    </div>
 
-        <div class="entete">
-            <a th:href="${HOST}">[[${HOST}]]</a>
-        </div>
+                    <div class="entete">
+                        <a th:href="${HOST}">[[${HOST}]]</a>
+                    </div>
+
+                </td>
+                <td>
+                    <div>
+                        <img class="logos" src="logo-the-muntu.png" alt="SICA - SCIENCES IN CAMEROON">
+                    </div>
+
+                    <div class="entete">
+                        contact@muntu-institute.africa
+                    </div>
+
+                </td>
+            </tr>
+        </table>
 
         <div class="body">
             <div>
                 <p class="rep titre">
                     <strong>[[${publication.titre}]]</strong>
                     <br>
-                    <th:block th:each="auteur : ${publication.auteurs}">
-                        <span> [[${auteur.prenom}]] [[${auteur.nom}]],</span>
-                    </th:block>
+                <th:block th:each="auteur : ${publication.auteurs}">
+                    <span> [[${auteur.prenom}]] [[${auteur.nom}]],</span>
+                </th:block>
                 </p>
                 <p>
                     <img src="fleche.png"> <strong style="position: relative;top: -5px;">Pour citer cette version</strong>
@@ -54,7 +71,7 @@
                 </tr>
             </table>
             <p class="rep">
-                Ce Doucment est non-commercial. À utiliser dans le strict respect des Conditions 
+                Ce document est non-commercial. À utiliser dans le strict respect des Conditions 
                 Générales d’Utilisation de la plate-forme SICA.
             </p>
             <p class="rep not-sale"><img src="not-sale.png" ></p>

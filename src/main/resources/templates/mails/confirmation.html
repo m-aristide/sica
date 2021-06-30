@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorator="layout.html">
+
+
+<div class="body" layout:fragment="content">
+    <div>
+        Chèr(e) [[${utilisateur.prenom}]] [[${utilisateur.nom}]] !
+        <br><br>
+        Nous vous informons que votre compte <strong> [[${utilisateur.username}]] </strong> a bien été créé.
+        <br>
+        <p><a th:href="${HOST} + @{?code=} + ${utilisateur.active}">Cliquez ici pour confirmer votre adresse</a></p> ou copiez le lien suivant
+        <span style="padding: 0 5px"><i>[[${HOST}]]?code=[[${utilisateur.active}]]</i></span> et ouvrez le!
+    </div>
+</div>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorator="layout.html">
+
+
+<div class="body" layout:fragment="content">
+    <div>
+        Chèr(e) [[${utilisateur.prenom}]] [[${utilisateur.nom}]] !
+        <br><br>
+        Nous vous informons que votre compte <strong> [[${utilisateur.username}]] </strong> a été réinitialisé avec succès.
+        <br>
+        Le mot de passe pour accéder à votre compte est : [[${password}]]. 
+        <br>
+        <strong>Veuillez le changer dès votre connexion</strong>.
+    </div>
+</div>

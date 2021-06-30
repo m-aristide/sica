@@ -26,8 +26,15 @@ public class AuteurService {
         }
         Auteur autor = this.auteurRepository.findById(auteur.getId()).orElse(null);
         if (autor == null) {
-            auteur.setId(null);
-            return this.auteurRepository.save(auteur);
+            // vérification email
+            autor = this.auteurRepository.findByEmail(auteur.getEmail());
+            if (autor == null) {
+                auteur.setId(null);
+                return this.auteurRepository.save(auteur);
+            } else {
+                autor.update(auteur);
+                return this.auteurRepository.save(autor);
+            }
         }
         autor.update(auteur);
         return this.auteurRepository.save(autor);

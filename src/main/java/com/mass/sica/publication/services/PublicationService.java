@@ -13,11 +13,9 @@ import com.mass.sica.domaine.repositories.ISpecialiteRepository;
 import com.mass.sica.domaine.repositories.ITypePublicationRepository;
 import com.mass.sica.domaine.services.DomaineService;
 import com.mass.sica.publication.entities.AnneeSoutenance;
-import com.mass.sica.publication.entities.Auteur;
 import com.mass.sica.publication.entities.Publication;
 import com.mass.sica.publication.repositories.IAnneeSoutenanceRepository;
 import com.mass.sica.publication.repositories.IPublicationRepository;
-import com.mass.sica.publication.utils.PDFMerger;
 import com.mass.sica.publication.utils.PUBTypeToCSLType;
 import com.mass.sica.utils.APIMessage;
 import com.mass.sica.utils.UtilsJob;
@@ -26,9 +24,6 @@ import com.mass.sica.utils.services.FileStorageService;
 import com.mass.sica.utils.services.UtilsService;
 import com.mass.sica.utils.specification.GenericSpecification;
 import com.mass.sica.utils.specification.SearchCriteria;
-import de.undercouch.citeproc.CSL;
-import de.undercouch.citeproc.csl.CSLItemData;
-import de.undercouch.citeproc.csl.CSLItemDataBuilder;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -120,11 +115,14 @@ public class PublicationService {
 
         // construction des auteurs
         data.setAuteurs(data.getAuteurs().stream().map(auteur -> this.auteurService.createUpdateAuteur(auteur)).collect(Collectors.toList()));
-
+        
         data = repository.save(data);
 
         // code
         data.setCode(UtilsJob.codePubGenerator(data.getId()));
+        
+        // citation
+        data.setCitation(PUBTypeToCSLType.citation(data));
 
         try {
             // fichier
@@ -238,7 +236,7 @@ public class PublicationService {
         setAnneeSoutenanceStat(pub.getAnneeSoutenance(), 1);
 
         // citation
-        pub.setCitation(PUBTypeToCSLType.citation(pub));
+        //pub.setCitation(PUBTypeToCSLType.citation(pub));
         /*CSLItemDataBuilder citebuilder = new CSLItemDataBuilder()
                 .type(PUBTypeToCSLType.convert(pub.getType().getDesignation()))
                 .title(pub.getTitre())
@@ -334,6 +332,9 @@ public class PublicationService {
         // construction des auteurs
         pub.setAuteurs(data.getAuteurs().stream().map(auteur -> this.auteurService.createUpdateAuteur(auteur)).collect(Collectors.toList()));
 
+        // citation
+        pub.setCitation(PUBTypeToCSLType.citation(pub));
+        
         // dossier de la publication
         String dossier = "publications" + File.separator + data.getId() + File.separator;
 
@@ -344,12 +345,13 @@ public class PublicationService {
 
             // on vérifie s'il faut refaire la première page
             String fileName = UtilsJob.getFileName(data.getFichier());
+            
             if (fileName != null) {
                 // ajout de la page de SICA
                 String firstPage = storageService.makeSicaPubPage(data, dossier);
 
                 // générattion de la page de garde SICA
-                String fichier = storageService.mergeInto(dossier + data.getCode() + "-" + fileName, firstPage, dossier + fileName);
+                String fichier = storageService.mergeInto(dossier + pub.getCode() + "-" + fileName, firstPage, dossier + fileName);
                 pub.setFichier(fichier);
             }
         } catch (MalformedURLException ex) {
@@ -366,15 +368,18 @@ public class PublicationService {
                 String firstPage = storageService.makeSicaPubPage(data, dossier);
 
                 // générattion de la page de garde SICA
-                String fichier = storageService.mergeInto(dossier + data.getCode() + "-" + fileName, firstPage, dossier + fileName);
+                String fichier = storageService.mergeInto(dossier + pub.getCode() + "-" + fileName, firstPage, dossier + fileName);
                 pub.setFichier(fichier);
 
             } catch (IOException ex1) {
+                ex1.printStackTrace();
                 Logger.getLogger(PublicationService.class.getName()).log(Level.SEVERE, null, ex1);
-            } catch (Exception ex1) {
-                Logger.getLogger(PublicationService.class.getName()).log(Level.SEVERE, null, ex1);
+            } catch (Exception ex2) {
+                ex2.printStackTrace();
+                Logger.getLogger(PublicationService.class.getName()).log(Level.SEVERE, null, ex2);
             }
         } catch (Exception ex) {
+            ex.printStackTrace();
             Logger.getLogger(PublicationService.class.getName()).log(Level.SEVERE, null, ex);
         }
 

@@ -20,10 +20,13 @@ body {
     size: A4;
 }
 
-.logos {
-    width: 250px;
-    margin: 0 auto;
-    display: block;
+.logos-entete td {
+   text-align: center;
+}
+
+.logos-entete img {
+    height: 70px;
+    width: auto;
 }
 
 .qrcode {
@@ -79,11 +82,11 @@ div.footer {
     bottom: 0;
 }
 
-div.footer table {
+table {
     width: 100%
 }
 
-div.footer table td {
+table td {
     width: 50%;
     vertical-align: baseline;
 }

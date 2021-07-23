@@ -153,7 +153,7 @@
             <scope>compile</scope>
         </dependency>
         
-                <!-- QRCODE -->
+        <!-- QRCODE -->
         <dependency>
             <groupId>com.google.zxing</groupId>
             <artifactId>core</artifactId>

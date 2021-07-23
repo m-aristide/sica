@@ -79,7 +79,7 @@ public class DomaineControler {
 
     @GetMapping("/domaine/topublish")
     public ApiResponse<List<DomaineToPublish>> domainesTopublish() {
-        return new ApiResponse<>(true, this.repository.getByPublishedTrue());
+        return new ApiResponse<>(true, this.repository.getPublishedTrue());
     }
 
     @GetMapping("/domaine/{id}")

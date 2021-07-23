@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,7 @@ import lombok.NoArgsConstructor;
  * @author Aristide MASSAGA
  */
 @Entity
+@Table(name = "domaine")
 @Data
 @NoArgsConstructor
 public class Domaine extends AuditModel {

@@ -11,6 +11,8 @@
 
     .entete>a>img {
       background-color: #ffffff;
+      height: 64px;
+      max-height: 64px;
     }
 
     .entete>div {
@@ -47,7 +49,7 @@
 
     <div class="entete">
       <a th:href="${HOST}">
-        <img style="height: 64px;" th:src="${HOST} + ${'/'} + @{assets/images/logo.png}"alt="">
+        <img th:src="${HOST} + ${'/'} + @{assets/images/logo.png}">
       </a>
       <div>Sciences in Cameroon (SICA)</div>
     </div>

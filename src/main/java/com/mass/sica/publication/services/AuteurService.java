@@ -21,7 +21,30 @@ public class AuteurService {
     private IAuteurRepository auteurRepository;
 
     public Auteur createUpdateAuteur(Auteur auteur) {
-        if (auteur.getId() == null) {
+
+        if ("null@null.null".equals(auteur.getEmail())) {
+            auteur.setEmail(null);
+        }
+
+        if (auteur.getId() != null) {
+            Auteur autor = this.auteurRepository.findById(auteur.getId()).orElse(null);
+            if (autor != null) {
+                autor.update(auteur);
+                return this.auteurRepository.save(autor);
+            }
+        }
+
+        if (auteur.getEmail() != null) {
+            Auteur autor = this.auteurRepository.findByEmail(auteur.getEmail());
+            if (autor != null) {
+                autor.update(auteur);
+                return this.auteurRepository.save(autor);
+            }
+        }
+
+        return this.auteurRepository.save(auteur);
+
+        /*if (auteur.getId() == null) {
             return this.auteurRepository.save(auteur);
         }
         Auteur autor = this.auteurRepository.findById(auteur.getId()).orElse(null);
@@ -37,7 +60,7 @@ public class AuteurService {
             }
         }
         autor.update(auteur);
-        return this.auteurRepository.save(autor);
+        return this.auteurRepository.save(autor);*/
     }
 
 }

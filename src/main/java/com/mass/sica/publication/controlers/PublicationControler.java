@@ -8,6 +8,7 @@ package com.mass.sica.publication.controlers;
 import com.mass.sica.publication.entities.AnneeSoutenance;
 import com.mass.sica.publication.entities.Publication;
 import com.mass.sica.publication.projections.AnneeSoutenanceProjection;
+import com.mass.sica.publication.projections.PubCitationProjection;
 import com.mass.sica.publication.repositories.IAnneeSoutenanceRepository;
 import com.mass.sica.publication.services.PublicationService;
 import com.mass.sica.utils.APIMessage;
@@ -59,6 +60,12 @@ public class PublicationControler {
     public ApiResponse<Page<Publication>> publications(Pageable pgble) {
 
         return new ApiResponse<>(true, service.publications(pgble));
+    }
+
+    @GetMapping("publication/citation")
+    public ApiResponse<Page<PubCitationProjection>> publicationsCitation(Pageable pgble) {
+
+        return new ApiResponse<>(true, service.publicationsCitation(pgble));
     }
 
     @GetMapping("publication/consulter")

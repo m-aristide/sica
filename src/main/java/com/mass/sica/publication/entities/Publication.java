@@ -18,6 +18,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -29,6 +30,7 @@ import lombok.NoArgsConstructor;
  * @author Aristide MASSAGA
  */
 @Entity
+@Table(name = "publication")
 @Data
 @NoArgsConstructor
 public class Publication extends AuditModel {

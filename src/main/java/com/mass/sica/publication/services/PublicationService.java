@@ -14,6 +14,7 @@ import com.mass.sica.domaine.repositories.ITypePublicationRepository;
 import com.mass.sica.domaine.services.DomaineService;
 import com.mass.sica.publication.entities.AnneeSoutenance;
 import com.mass.sica.publication.entities.Publication;
+import com.mass.sica.publication.projections.PubCitationProjection;
 import com.mass.sica.publication.repositories.IAnneeSoutenanceRepository;
 import com.mass.sica.publication.repositories.IPublicationRepository;
 import com.mass.sica.publication.utils.PUBTypeToCSLType;
@@ -174,6 +175,10 @@ public class PublicationService {
 
     public Page<Publication> publications(Pageable pgble) {
         return this.repository.findByPublishedTrueAndAccepterTrue(pgble);
+    }
+
+    public Page<PubCitationProjection> publicationsCitation(Pageable pgble) {
+        return this.repository.getPubCitation(pgble);
     }
 
     public Publication publication(String idCode) {

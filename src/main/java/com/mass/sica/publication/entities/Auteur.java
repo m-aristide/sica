@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +21,7 @@ import lombok.NoArgsConstructor;
  * @author Aristide MASSAGA
  */
 @Entity
+@Table(name = "auteur")
 @Data
 @NoArgsConstructor
 public class Auteur extends AuditModel {
@@ -33,7 +36,6 @@ public class Auteur extends AuditModel {
     @NotBlank
     private String prenom;
 
-    @NotBlank
     private String email;
 
     private String telephone;

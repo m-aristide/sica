@@ -22,15 +22,4 @@ public class FileController {
     public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("service") String service) {
         return storageService.uploadFile(file, service);
     }
-
-    /*
-    @PostMapping("/uploadmultiplefiles")
-    public ResponseEntity<?> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files, @RequestParam("service") String service) {
-        return storageService.uploadMultipleFiles(files, service);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteFile(@PathVariable(value = "id") Long fileId) {
-        return storageService.deleteFile(fileId);
-    }*/
 }
